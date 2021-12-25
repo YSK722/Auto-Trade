@@ -15,7 +15,7 @@
 1.   GMOコインの[連携APIキーを取得し](https://cryptolinc.com/faq_cases/gmocoin_api_setting)、アクセスキー・シークレットキーをconfig.iniに書く
      ただし、**資産**、**トレード**の全ての欄にチェックを付ける
 1.   LINE Notifyの[トークンを発行](https://www.smilevision.co.jp/blog/tsukatte01/)し、utils/notify.pyに書く
-1.   XEM以外の暗号資産（Bitcoinなど）で売買したい場合、main.pyとgmocoin.pyのコード内の*XEM*を該当する銘柄に書き換える
+1.   XEM以外の暗号資産（Bitcoinなど）で売買したい場合、main.pyとgmocoin.pyのコード内の*XEM*を該当する銘柄に書き換える  
      参照：https://api.coin.z.com/docs/?python#outline
 
 ## 起動
