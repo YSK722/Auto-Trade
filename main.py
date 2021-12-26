@@ -48,6 +48,7 @@ while True:
     df['MA13'] = df['price'].rolling(window=13).mean()
     df['MA168'] = df['price'].rolling(window=168).mean()
 
+    MA3 = = df['price'].rolling(window=3).mean()
     MA5 = df['MA5'].iloc[-1]
     MA8 = df['MA8'].iloc[-1]
     MA13 = df['MA13'].iloc[-1]
@@ -62,7 +63,7 @@ while True:
             if MA5 < MA8 < MA13:
                 priceAtBid = df['price'].iloc[-1]
             else:
-                priceAtBid = round(max(df['price'].iloc[-1], MA5), 3)
+                priceAtBid = round(max(df['price'].iloc[-1], MA3), 3)
             params = {
                 'symbol': 'XEM',
                 'side': 'SELL',
@@ -79,7 +80,7 @@ while True:
         if MA13 < MA8 < MA5 \
                 and not (lastMA13 < lastMA8 < lastMA5) \
                 and MA168 < df['price'].iloc[-1]:
-            priceAtAsk = round(min(df['price'].iloc[-1], MA5), 3)
+            priceAtAsk = round(min(df['price'].iloc[-1], MA3), 3)
             size = str(int(0.95*float(positions['JPY'])/priceAtAsk))
             params = {
                 'symbol': 'XEM',
