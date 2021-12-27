@@ -45,7 +45,7 @@ while True:
     df['MA13'] = df['price'].rolling(window=13).mean()
     df['MA168'] = df['price'].rolling(window=168).mean()
 
-    MA3 = = df['price'].rolling(window=3).mean()
+    MA3 = df['price'].rolling(window=3).mean()
     MA5 = df['MA5'].iloc[-1]
     MA8 = df['MA8'].iloc[-1]
     MA13 = df['MA13'].iloc[-1]
