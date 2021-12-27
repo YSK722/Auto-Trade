@@ -25,10 +25,7 @@ while True:
     time.sleep(interval)
     if i == 60*60*24/interval - 1:
         i = 0
-        if len(df) < 168 - 1:
-            send_message_to_line('Data Collecting...')
-        else:
-            send_message_to_line('Auto Trading...')
+        send_message_to_line('Data Collecting...') if len(df) < 168 - 1 else send_message_to_line('Auto Trading...')
     else:
         i += 1
     positions = gmocoin.position
@@ -60,10 +57,7 @@ while True:
         if priceAtAsk < df['price'].iloc[-1] \
                 and not (MA13 < MA8 < MA5) \
                 or MA5 < MA8 < MA13:
-            if MA5 < MA8 < MA13:
-                priceAtBid = df['price'].iloc[-1]
-            else:
-                priceAtBid = round(max(df['price'].iloc[-1], MA3), 3)
+            priceAtBid = df['price'].iloc[-1] if MA5 < MA8 < MA13 else round(max(df['price'].iloc[-1], MA3), 3)
             params = {
                 'symbol': 'XEM',
                 'side': 'SELL',
@@ -77,9 +71,8 @@ while True:
         lastMA5 = df['MA5'].iloc[-2]
         lastMA8 = df['MA8'].iloc[-2]
         lastMA13 = df['MA13'].iloc[-2]
-        if MA13 < MA8 < MA5 \
-                and not (lastMA13 < lastMA8 < lastMA5) \
-                and MA168 < df['price'].iloc[-1]:
+        if MA168 < MA13 < MA8 < MA5 \
+                and not (lastMA13 < lastMA8 < lastMA5):
             priceAtAsk = round(min(df['price'].iloc[-1], MA3), 3)
             size = str(int(0.95*float(positions['JPY'])/priceAtAsk))
             params = {
