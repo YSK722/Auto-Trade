@@ -57,7 +57,7 @@ while True:
         if priceAtAsk < df['price'].iloc[-1] \
                 and not (MA13 < MA8 < MA5) \
                 or MA5 < MA8 < MA13:
-            priceAtBid = df['price'].iloc[-1] if MA5 < MA8 < MA13 else round(max(df['price'].iloc[-1], MA3), 3)
+            priceAtBid = df['price'].iloc[-1] if MA5 < MA8 < MA13 else max(df['price'].iloc[-1], round(MA3, 3))
             params = {
                 'symbol': 'XEM',
                 'side': 'SELL',
@@ -73,7 +73,7 @@ while True:
         lastMA13 = df['MA13'].iloc[-2]
         if MA168 < MA13 < MA8 < MA5 \
                 and not (lastMA13 < lastMA8 < lastMA5):
-            priceAtAsk = round(min(df['price'].iloc[-1], MA3), 3)
+            priceAtAsk = min(df['price'].iloc[-1], round(MA3, 3))
             size = str(int(0.95*float(positions['JPY'])/priceAtAsk))
             params = {
                 'symbol': 'XEM',
