@@ -45,6 +45,7 @@ while True:
     df['MA13'] = df['price'].rolling(window=13).mean()
     df['MA168'] = df['price'].rolling(window=168).mean()
 
+    price = df['price'].iloc[-1]
     MA3 = round(df['price'].rolling(window=3).mean(), 3)
     MA5 = df['MA5'].iloc[-1]
     MA8 = df['MA8'].iloc[-1]
@@ -54,10 +55,10 @@ while True:
     gmocoin.cancel({'symbols': ['XEM']})
 
     if positions['XEM'] != '0':
-        if priceAtAsk < df['price'].iloc[-1] \
+        if priceAtAsk < price \
                 and not (MA13 < MA8 < MA5) \
                 or MA5 < MA8 < MA13:
-            priceAtBid = df['price'].iloc[-1] if MA5 < MA8 < MA13 else max(df['price'].iloc[-1], MA3)
+            priceAtBid = price if MA5 < MA8 < MA13 else max(price, MA3)
             params = {
                 'symbol': 'XEM',
                 'side': 'SELL',
@@ -73,7 +74,7 @@ while True:
         lastMA13 = df['MA13'].iloc[-2]
         if MA168 < MA13 < MA8 < MA5 \
                 and not (lastMA13 < lastMA8 < lastMA5):
-            priceAtAsk = min(df['price'].iloc[-1], MA3)
+            priceAtAsk = min(price, MA3)
             size = str(int(0.95*float(positions['JPY'])/priceAtAsk))
             params = {
                 'symbol': 'XEM',
