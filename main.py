@@ -40,13 +40,14 @@ while True:
     if len(df) < 168:
         continue
 
+    df['MA3'] = df['price'].rolling(window=3).mean()
     df['MA5'] = df['price'].rolling(window=5).mean()
     df['MA8'] = df['price'].rolling(window=8).mean()
     df['MA13'] = df['price'].rolling(window=13).mean()
     df['MA168'] = df['price'].rolling(window=168).mean()
 
     price = df['price'].iloc[-1]
-    MA3 = round(df['price'].rolling(window=3).mean(), 3)
+    MA3 = round(df['MA3'].iloc[-1], 3)
     MA5 = df['MA5'].iloc[-1]
     MA8 = df['MA8'].iloc[-1]
     MA13 = df['MA13'].iloc[-1]
