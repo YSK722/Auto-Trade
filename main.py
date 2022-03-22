@@ -45,6 +45,9 @@ while True:
     df['MA8'] = df['price'].rolling(window=8).mean()
     df['MA13'] = df['price'].rolling(window=13).mean()
     df['MA168'] = df['price'].rolling(window=168).mean()
+    df['std'] = df['price'].rolling(window=168).std()
+
+    df['+3σ'] = df['MA168'] + 3*df['std']
 
     price = df['price'].iloc[-1]
     MA3 = round(df['MA3'].iloc[-1], 3)
@@ -53,18 +56,21 @@ while True:
     MA13 = df['MA13'].iloc[-1]
     MA168 = df['MA168'].iloc[-1]
 
+    if len(df) < 168 + 4:
+        continue
+
     gmocoin.cancel({'symbols': ['XEM']})
 
     if positions['XEM'] != '0':
         if priceAtAsk < price \
                 and not (MA13 < MA8 < MA5) \
-                or MA5 < MA8 < MA13:
-            priceAtBid = price if MA5 < MA8 < MA13 else max(price, MA3)
+                or MA5 < MA8 < MA13 \
+                or df['+3σ'].iloc[-1] < price:
             params = {
                 'symbol': 'XEM',
                 'side': 'SELL',
                 'executionType': 'LIMIT',
-                'price': priceAtBid,
+                'price': price,
                 'size': positions['XEM']
             }
             r = gmocoin.order(params)
@@ -74,17 +80,18 @@ while True:
         lastMA8 = df['MA8'].iloc[-2]
         lastMA13 = df['MA13'].iloc[-2]
         if MA168 < MA13 < MA8 < MA5 \
-                and not (lastMA13 < lastMA8 < lastMA5):
-            priceAtAsk = min(price, MA3)
-            size = str(int(0.95*float(positions['JPY'])/priceAtAsk))
+                and not (lastMA13 < lastMA8 < lastMA5) \
+                and df['MA168'].iloc[-5] < MA168:
+            size = str(int(0.95*float(positions['JPY'])/price))
             params = {
                 'symbol': 'XEM',
                 'side': 'BUY',
                 'executionType': 'LIMIT',
-                'price': priceAtAsk,
+                'price': price,
                 'size': size
             }
             r = gmocoin.order(params)
+            priceAtAsk = price
             send_message_to_line(r)
 
     df = df.iloc[1:, :]
