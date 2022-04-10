@@ -47,7 +47,7 @@ while True:
     df['std'] = df['price'].rolling(window=168).std()
 
     df['+3σ'] = df['MA168'] + 3*df['std']
-    df['-3σ'] = df['MA168'] + 3*df['std']
+    df['-3σ'] = df['MA168'] - 3*df['std']
 
     price = df['price'].iloc[-1]
     MA5 = df['MA5'].iloc[-1]
