@@ -72,8 +72,7 @@ while True:
                 'price': price,
                 'size': positions['XEM']
             }
-            r = gmocoin.order(params)
-            send_message_to_line(r)
+            gmocoin.order(params)
     else:
         lastMA5 = df['MA5'].iloc[-2]
         lastMA8 = df['MA8'].iloc[-2]
@@ -90,8 +89,7 @@ while True:
                 'price': price,
                 'size': size
             }
-            r = gmocoin.order(params)
+            gmocoin.order(params)
             priceAtAsk = price
-            send_message_to_line(r)
 
     df = df.iloc[1:, :]
