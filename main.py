@@ -1,6 +1,6 @@
 import configparser
-import time
 import sys
+import time
 
 import pandas as pd
 
@@ -25,7 +25,8 @@ while True:
     time.sleep(interval)
     if i == 60*60*24/interval - 1:
         i = 0
-        send_message_to_line('Data Collecting...') if len(df) < 168 - 1 else send_message_to_line('Auto Trading...')
+        send_message_to_line('Data Collecting...') if len(
+            df) < 168 - 1 else send_message_to_line('Auto Trading...')
     else:
         i += 1
     positions = gmocoin.position
