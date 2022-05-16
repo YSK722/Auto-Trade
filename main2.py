@@ -23,7 +23,11 @@ priceAtAsk = 0 if len(sys.argv) == 1 else float(sys.argv[1])
 i = 0
 while True:
     time.sleep(interval)
-    send_message_to_line('Auto Trading...')
+    if i == 60*60*24/interval - 1:
+        i = 0
+        send_message_to_line('Auto Trading...')
+    else:
+        i += 1
     positions = gmocoin.position
 
     if 'XEM' not in positions:
