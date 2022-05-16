@@ -56,9 +56,6 @@ while True:
     MA13 = df['MA13'].iloc[-1]
     MA168 = df['MA168'].iloc[-1]
 
-    if len(df) < 168 + 4:
-        continue
-
     gmocoin.cancel({'symbols': ['XEM']})
 
     if positions['XEM'] != '0':
@@ -80,7 +77,6 @@ while True:
         lastMA13 = df['MA13'].iloc[-2]
         if MA168 < MA13 < MA8 < MA5 \
                 and not (lastMA13 < lastMA8 < lastMA5) \
-                and df['MA168'].iloc[-5] < MA168 \
                 or price < df['-3σ'].iloc[-1]:
             size = str(int(0.95*float(positions['JPY'])/price))
             params = {
