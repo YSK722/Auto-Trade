@@ -1,5 +1,4 @@
 import configparser
-import sys
 import time
 
 import pandas as pd
@@ -19,7 +18,6 @@ interval = 60*15
 
 df = pd.DataFrame()
 send_message_to_line('Start Auto Trading...')
-priceAtAsk = 0 if len(sys.argv) == 1 else float(sys.argv[1])
 i = 0
 while True:
     time.sleep(interval)
