@@ -87,6 +87,5 @@ while True:
                 'size': size
             }
             gmocoin.order(params)
-            priceAtAsk = price
 
     df = df.iloc[1:, :]
