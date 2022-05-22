@@ -45,26 +45,59 @@ while True:
     df['-2σ'] = df['MA192'] - 2*df['std']
     df['+3σ'] = df['MA192'] + 3*df['std']
     df['-3σ'] = df['MA192'] - 3*df['std']
+    df['+4σ'] = df['MA192'] + 4*df['std']
+    df['-4σ'] = df['MA192'] - 4*df['std']
+    df['+5σ'] = df['MA192'] + 5*df['std']
+    df['-5σ'] = df['MA192'] - 5*df['std']
+    df['+6σ'] = df['MA192'] + 6*df['std']
+    df['-6σ'] = df['MA192'] - 6*df['std']
+    df['+7σ'] = df['MA192'] + 7*df['std']
+    df['-7σ'] = df['MA192'] - 7*df['std']
 
     price = df['price'].iloc[-1]
     MA192 = df['MA192'].iloc[-1]
     lstPrice = df['price'].iloc[-2]
     lstMA192 = df['MA192'].iloc[-2]
 
-    pTwo = df['+2σ'].iloc[-1]
-    mTwo = df['-2σ'].iloc[-1]
-    pThree = df['+3σ'].iloc[-1]
-    mThree = df['-3σ'].iloc[-1]
-    lstpTwo = df['+2σ'].iloc[-2]
-    lstmTwo = df['-2σ'].iloc[-2]
+    p2 = df['+2σ'].iloc[-1]
+    m2 = df['-2σ'].iloc[-1]
+    p3 = df['+3σ'].iloc[-1]
+    m3 = df['-3σ'].iloc[-1]
+    p4 = df['+4σ'].iloc[-1]
+    m4 = df['-4σ'].iloc[-1]
+    p5 = df['+5σ'].iloc[-1]
+    m5 = df['-5σ'].iloc[-1]
+    p6 = df['+6σ'].iloc[-1]
+    m6 = df['-6σ'].iloc[-1]
+    p7 = df['+7σ'].iloc[-1]
+    m7 = df['-7σ'].iloc[-1]
+
+    lstp2 = df['+2σ'].iloc[-2]
+    lstm2 = df['-2σ'].iloc[-2]
+    lstp3 = df['+3σ'].iloc[-2]
+    lstm3 = df['-3σ'].iloc[-2]
+    lstp4 = df['+4σ'].iloc[-2]
+    lstm4 = df['-4σ'].iloc[-2]
+    lstp5 = df['+5σ'].iloc[-2]
+    lstm5 = df['-5σ'].iloc[-2]
+    lstp6 = df['+6σ'].iloc[-2]
+    lstm6 = df['-6σ'].iloc[-2]
 
     gmocoin.cancel({'symbols': ['XEM']})
 
     if positions['XEM'] != '0':
-        if price < MA192 and lstMA192 < lstPrice or \
-                    pThree < price or \
-                    price < pTwo and lstpTwo < lstPrice or \
-                    price < mTwo and lstmTwo < lstPrice:
+        if (price < MA192 and lstMA192 < lstPrice or
+            p7 < price or
+            price < p6 and lstp6 < lstPrice or
+            price < p5 and lstp5 < lstPrice or
+            price < p4 and lstp4 < lstPrice or
+            price < p3 and lstp3 < lstPrice or
+            price < p2 and lstp2 < lstPrice or
+            price < m2 and lstm2 < lstPrice or
+            price < m3 and lstm3 < lstPrice or
+            price < m4 and lstm4 < lstPrice or
+            price < m5 and lstm5 < lstPrice or
+                price < m6 and lstm6 < lstPrice):
             params = {
                 'symbol': 'XEM',
                 'side': 'SELL',
@@ -74,8 +107,12 @@ while True:
             }
             gmocoin.order(params)
     else:
-        if MA192 < price and lstPrice < lstMA192 or \
-                price < mThree:
+        if (MA192 < price and lstPrice < lstMA192 or
+            price < m7 or
+            m6 < price and lstPrice < lstm6 or
+            m5 < price and lstPrice < lstm5 or
+            m4 < price and lstPrice < lstm4 or
+            m3 < price and lstPrice < lstm3):
             size = str(int(0.95*float(positions['JPY'])/price))
             params = {
                 'symbol': 'XEM',
