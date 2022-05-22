@@ -112,7 +112,7 @@ while True:
             m6 < price and lstPrice < lstm6 or
             m5 < price and lstPrice < lstm5 or
             m4 < price and lstPrice < lstm4 or
-            m3 < price and lstPrice < lstm3):
+                m3 < price and lstPrice < lstm3):
             size = str(int(0.95*float(positions['JPY'])/price))
             params = {
                 'symbol': 'XEM',
