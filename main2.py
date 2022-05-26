@@ -35,7 +35,7 @@ while True:
         {'price': gmocoin.last}, ignore_index=True
     )
 
-    if len(df) < 192:
+    if len(df) < 192 + 1:
         continue
 
     df['MA192'] = df['price'].rolling(window=192).mean()
