@@ -18,7 +18,7 @@ interval = 60*15
 
 df = pd.DataFrame()
 send_message_to_line('Start Auto Trading...')
-i = 0
+i, priceAtAsk = 0, 0
 while True:
     time.sleep(interval)
     if i == 60*60*24/interval - 1:
@@ -86,7 +86,7 @@ while True:
     gmocoin.cancel({'symbols': ['XEM']})
 
     if positions['XEM'] != '0':
-        if (price < MA192 and lstMA192 < lstPrice or
+        if (priceAtAsk < price < MA192 and lstMA192 < lstPrice or
             p7 < price or
             price < p6 and lstp6 < lstPrice or
             price < p5 and lstp5 < lstPrice or
@@ -122,5 +122,6 @@ while True:
                 'size': size
             }
             gmocoin.order(params)
+            priceAtAsk = price
 
     df = df.iloc[1:, :]
