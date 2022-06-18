@@ -23,7 +23,8 @@ while True:
     time.sleep(interval)
     if i == 60*60*24/interval - 1:
         i = 0
-        send_message_to_line('Auto Trading...')
+        send_message_to_line('Data Collecting...') if len(
+            df) < 672 - 1 else send_message_to_line('Auto Trading...')
     else:
         i += 1
     positions = gmocoin.position
@@ -35,9 +36,10 @@ while True:
         {'price': gmocoin.last}, ignore_index=True
     )
 
-    if len(df) < 192 + 1:
+    if len(df) < 672:
         continue
 
+    df['MA672'] = df['price'].rolling(window=672).mean()
     df['MA192'] = df['price'].rolling(window=192).mean()
     df['std'] = df['price'].rolling(window=192).std()
 
@@ -55,6 +57,7 @@ while True:
     df['-7σ'] = df['MA192'] - 7*df['std']
 
     price = df['price'].iloc[-1]
+    MA672 = df['MA672'].iloc[-1]
     MA192 = df['MA192'].iloc[-1]
     lstPrice = df['price'].iloc[-2]
     lstMA192 = df['MA192'].iloc[-2]
@@ -107,7 +110,7 @@ while True:
             }
             gmocoin.order(params)
     else:
-        if (MA192 < price and lstPrice < lstMA192 or
+        if (MA672 < MA192 < price and lstPrice < lstMA192 or
             price < m7 or
             m6 < price and lstPrice < lstm6 or
             m5 < price and lstPrice < lstm5 or
