@@ -96,11 +96,7 @@ while True:
             price < p4 and lstp4 < lstPrice or
             price < p3 and lstp3 < lstPrice or
             price < p2 and lstp2 < lstPrice or
-            price < m2 and lstm2 < lstPrice or
-            price < m3 and lstm3 < lstPrice or
-            price < m4 and lstm4 < lstPrice or
-            price < m5 and lstm5 < lstPrice or
-                price < m6 and lstm6 < lstPrice):
+                price < m2 and lstm2 < lstPrice):
             params = {
                 'symbol': 'XEM',
                 'side': 'SELL',
