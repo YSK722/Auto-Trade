@@ -3,6 +3,7 @@ import hashlib
 import json
 import time
 from datetime import datetime
+from socket import gaierror
 
 import requests
 
@@ -31,15 +32,17 @@ class GMOcoin(object):
             "API-SIGN": sign
         }
 
-        try:
-            url = self.url+pp+endpoint
-            if method == 'GET':
-                r = requests.get(url, headers=headers, params=params)
-            else:
-                r = requests.post(url, headers=headers, data=body)
-        except Exception as e:
-            send_message_to_line(e)
-            raise
+        while True:
+            try:
+                url = self.url+pp+endpoint
+                if method == 'GET':
+                    r = requests.get(url, headers=headers, params=params)
+                else:
+                    r = requests.post(url, headers=headers, data=body)
+                break
+            except gaierror as e:
+                send_message_to_line(e)
+                time.sleep(1)
 
         return r.json()
 
