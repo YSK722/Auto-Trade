@@ -3,7 +3,6 @@ import hashlib
 import json
 import time
 from datetime import datetime
-from socket import gaierror
 
 import requests
 
@@ -40,8 +39,8 @@ class GMOcoin(object):
                 else:
                     r = requests.post(url, headers=headers, data=body)
                 break
-            except gaierror as e:
-                send_message_to_line(e)
+            except requests.exceptions.RequestException as e:
+                send_message_to_line(repr(e.args))
                 time.sleep(1)
 
         return r.json()
