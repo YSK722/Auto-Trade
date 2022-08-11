@@ -43,6 +43,7 @@ while True:
     df['MA192'] = df['price'].rolling(window=192).mean()
     df['std'] = df['price'].rolling(window=192).std()
 
+    df['+σ'] = df['MA192'] + df['std']
     df['+2σ'] = df['MA192'] + 2*df['std']
     df['-2σ'] = df['MA192'] - 2*df['std']
     df['+3σ'] = df['MA192'] + 3*df['std']
@@ -90,13 +91,13 @@ while True:
 
     if positions['XEM'] != '0':
         if (priceAtAsk < price < MA192 and lstMA192 < lstPrice or
-            p7 < price or
-            price < p6 and lstp6 < lstPrice or
-            price < p5 and lstp5 < lstPrice or
-            price < p4 and lstp4 < lstPrice or
-            price < p3 and lstp3 < lstPrice or
+            priceAtAsk < price < m2 and lstm2 < lstPrice or
             price < p2 and lstp2 < lstPrice or
-                price < m2 and lstm2 < lstPrice):
+            price < p3 and lstp3 < lstPrice or
+            price < p4 and lstp4 < lstPrice or
+            price < p5 and lstp5 < lstPrice or
+            price < p6 and lstp6 < lstPrice or
+                p7 < price):
             params = {
                 'symbol': 'XEM',
                 'side': 'SELL',
@@ -107,11 +108,12 @@ while True:
             gmocoin.order(params)
     else:
         if (MA672 < MA192 < price and lstPrice < lstMA192 or
-            price < m7 or
-            m6 < price and lstPrice < lstm6 or
-            m5 < price and lstPrice < lstm5 or
+            MA672 < m2 < price and lstPrice < lstm2 or
+            m3 < price and lstPrice < lstm3 or
             m4 < price and lstPrice < lstm4 or
-                m3 < price and lstPrice < lstm3):
+            m5 < price and lstPrice < lstm5 or
+            m6 < price and lstPrice < lstm6 or
+                price < m7):
             size = str(int(0.95*float(positions['JPY'])/price))
             params = {
                 'symbol': 'XEM',
