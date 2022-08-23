@@ -65,17 +65,17 @@ class GMOcoin(object):
         endpoint = '/v1/orderbooks?symbol=XEM'
         return self._request(endpoint=endpoint, params=params)
 
-    def balance(self):
+    def assets(self):
         pp = '/private'
         endpoint = '/v1/account/assets'
         return self._request(endpoint=endpoint, pp=pp)
 
     @property
     def position(self):
-        balance = self.balance()
-        if not balance.get('data'):
+        assets = self.assets()
+        if not assets.get('data'):
             return {}
-        return {d['symbol']: d['amount'] for d in balance['data']}
+        return {d['symbol']: d['amount'] for d in assets['data']}
 
     def order(self, params):
         pp = '/private'
@@ -83,7 +83,7 @@ class GMOcoin(object):
         return self._request(endpoint=endpoint, pp=pp, params=params,
                              method='POST')
 
-    def cancel(self, params):
+    def cancelBulkOrder(self, params):
         pp = '/private'
         endpoint = '/v1/cancelBulkOrder'
         return self._request(endpoint=endpoint, pp=pp, params=params,
