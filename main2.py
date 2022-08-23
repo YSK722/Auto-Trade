@@ -29,6 +29,7 @@ while True:
         i += 1
     ticker = gmocoin.ticker
     if not ticker.get('data'):
+        send_message_to_line('Server Maintenance')
         continue
 
     df = df.append(
