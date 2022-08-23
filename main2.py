@@ -27,7 +27,7 @@ while True:
             df) < 672 - 1 else send_message_to_line('Auto Trading...')
     else:
         i += 1
-    ticker = gmocoin.ticker
+    ticker = gmocoin.ticker()
     if not ticker.get('data'):
         send_message_to_line('Server Maintenance')
         continue
@@ -87,7 +87,7 @@ while True:
     lstp6 = df['+6σ'].iloc[-2]
     lstm6 = df['-6σ'].iloc[-2]
 
-    gmocoin.cancel({'symbols': ['XEM']})
+    gmocoin.cancelBulkOrder({'symbols': ['XEM']})
     positions = gmocoin.position
 
     if positions['XEM'] != '0':
