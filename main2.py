@@ -27,9 +27,8 @@ while True:
             df) < 672 - 1 else send_message_to_line('Auto Trading...')
     else:
         i += 1
-    positions = gmocoin.position
-
-    if 'XEM' not in positions:
+    ticker = gmocoin.ticker
+    if not ticker.get('data'):
         continue
 
     df = df.append(
@@ -88,6 +87,7 @@ while True:
     lstm6 = df['-6σ'].iloc[-2]
 
     gmocoin.cancel({'symbols': ['XEM']})
+    positions = gmocoin.position
 
     if positions['XEM'] != '0':
         if (priceAtAsk < price < MA192 and lstMA192 < lstPrice or
