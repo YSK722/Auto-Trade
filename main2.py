@@ -27,14 +27,13 @@ while True:
             df) < 672 - 1 else send_message_to_line('Auto Trading...')
     else:
         i += 1
-    ticker = gmocoin.ticker()
-    if not ticker.get('data'):
+
+    try:
+        last = gmocoin.last
+        df = df.append({'price': last}, ignore_index=True)
+    except KeyError:
         send_message_to_line('Server Maintenance')
         continue
-
-    df = df.append(
-        {'price': gmocoin.last}, ignore_index=True
-    )
 
     if len(df) < 672:
         continue
