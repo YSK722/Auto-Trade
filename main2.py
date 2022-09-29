@@ -64,27 +64,8 @@ while True:
 
     p2 = df['+2σ'].iloc[-1]
     m2 = df['-2σ'].iloc[-1]
-    p3 = df['+3σ'].iloc[-1]
-    m3 = df['-3σ'].iloc[-1]
-    p4 = df['+4σ'].iloc[-1]
-    m4 = df['-4σ'].iloc[-1]
-    p5 = df['+5σ'].iloc[-1]
-    m5 = df['-5σ'].iloc[-1]
-    p6 = df['+6σ'].iloc[-1]
-    m6 = df['-6σ'].iloc[-1]
-    p7 = df['+7σ'].iloc[-1]
-    m7 = df['-7σ'].iloc[-1]
-
     lstp2 = df['+2σ'].iloc[-2]
     lstm2 = df['-2σ'].iloc[-2]
-    lstp3 = df['+3σ'].iloc[-2]
-    lstm3 = df['-3σ'].iloc[-2]
-    lstp4 = df['+4σ'].iloc[-2]
-    lstm4 = df['-4σ'].iloc[-2]
-    lstp5 = df['+5σ'].iloc[-2]
-    lstm5 = df['-5σ'].iloc[-2]
-    lstp6 = df['+6σ'].iloc[-2]
-    lstm6 = df['-6σ'].iloc[-2]
 
     gmocoin.cancelBulkOrder({'symbols': ['XEM']})
     positions = gmocoin.position
@@ -92,12 +73,12 @@ while True:
     if positions['XEM'] != '0':
         if (priceAtAsk < price < MA192 and lstMA192 < lstPrice or
             priceAtAsk < price < m2 and lstm2 < lstPrice or
-            price < p2 and lstp2 < lstPrice or
-            price < p3 and lstp3 < lstPrice or
-            price < p4 and lstp4 < lstPrice or
-            price < p5 and lstp5 < lstPrice or
-            price < p6 and lstp6 < lstPrice or
-                p7 < price):
+            priceAtAsk < price < p2 and lstp2 < lstPrice or
+            price < df['+3σ'].iloc[-1] and df['+3σ'].iloc[-2] < lstPrice or
+            price < df['+4σ'].iloc[-1] and df['+4σ'].iloc[-2] < lstPrice or
+            price < df['+5σ'].iloc[-1] and df['+5σ'].iloc[-2] < lstPrice or
+            price < df['+6σ'].iloc[-1] and df['+6σ'].iloc[-2] < lstPrice or
+                df['+7σ'].iloc[-1] < price):
             params = {
                 'symbol': 'XEM',
                 'side': 'SELL',
@@ -109,11 +90,11 @@ while True:
     else:
         if (MA672 < MA192 < price and lstPrice < lstMA192 or
             MA672 < m2 < price and lstPrice < lstm2 or
-            m3 < price and lstPrice < lstm3 or
-            m4 < price and lstPrice < lstm4 or
-            m5 < price and lstPrice < lstm5 or
-            m6 < price and lstPrice < lstm6 or
-                price < m7):
+            df['-3σ'].iloc[-1] < price and lstPrice < df['-3σ'].iloc[-2] or
+            df['-4σ'].iloc[-1] < price and lstPrice < df['-4σ'].iloc[-2] or
+            df['-5σ'].iloc[-1] < price and lstPrice < df['-5σ'].iloc[-2] or
+            df['-6σ'].iloc[-1] < price and lstPrice < df['-6σ'].iloc[-2] or
+                price < df['-3σ'].iloc[-1]):
             size = str(int(0.95*float(positions['JPY'])/price))
             params = {
                 'symbol': 'XEM',
