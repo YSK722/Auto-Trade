@@ -42,7 +42,6 @@ while True:
     df['MA192'] = df['price'].rolling(window=192).mean()
     df['std'] = df['price'].rolling(window=192).std()
 
-    df['+σ'] = df['MA192'] + df['std']
     df['+2σ'] = df['MA192'] + 2*df['std']
     df['-2σ'] = df['MA192'] - 2*df['std']
     df['+3σ'] = df['MA192'] + 3*df['std']
