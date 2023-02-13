@@ -56,7 +56,7 @@ while True:
     positions = gmocoin.position
 
     if positions['XEM'] != '0':
-        if (priceAtAsk * 1.02 < price or df['+2σ'].iloc[-1] < price and priceAtAsk < price):
+        if priceAtAsk * 1.02 < price or df['+2σ'].iloc[-1] < price and priceAtAsk < price:
             params = {
                 'symbol': 'XEM',
                 'side': 'SELL',
