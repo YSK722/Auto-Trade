@@ -71,8 +71,9 @@ while True:
     positions = gmocoin.position
 
     if positions['XEM'] != '0':
-        send_message_to_line(f'BUY (price: {price}, P_down: {score[firstY]})')
         if score[firstY] > 0.5 and priceAtAsk < price:
+            send_message_to_line(
+                f'BUY (price: {price}, P_down: {score[firstY]})')
             """
             params = {
                 'symbol': 'XEM',
