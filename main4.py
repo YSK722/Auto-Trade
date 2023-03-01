@@ -43,7 +43,8 @@ while True:
     df['MA1'] = df['price'].rolling(window=stack1).mean()
     df['std'] = df['price'].rolling(window=stack1).std()
 
-    df['-2σ'] = df['MA2'] - 2*df['std']
+    df['-σ'] = df['MA1'] - df['std']
+    df['-2σ'] = df['MA1'] - 2*df['std']
     df['+2σ'] = df['MA1'] + 2*df['std']
 
     price = df['price'].iloc[-1]
@@ -66,7 +67,7 @@ while True:
             }
             gmocoin.order(params)
     else:
-        if MA2 < MA1 and price < df['-2σ'].iloc[-1]:
+        if MA2 < MA1 and price < df['-σ'].iloc[-1] or price < df['-2σ'].iloc[-1]:
             size = str(int(0.95*float(positions['JPY'])/price))
             params = {
                 'symbol': 'XEM',
