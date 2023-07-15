@@ -56,8 +56,7 @@ while True:
     try:
         df = Ticker.history(period='7d', interval='15m')
         gmocoin.cancelBulkOrder({'symbols': ['XEM']})
-        positions = gmocoin.position
-        posXEM = positions['XEM']
+        posXEM = gmocoin.position['XEM']
     except Exception as e:
         send_message_to_line(e.message)
         send_message_to_line('Server Maintenance')
