@@ -58,7 +58,7 @@ while True:
         gmocoin.cancelBulkOrder({'symbols': ['XEM']})
         posXEM = gmocoin.position['XEM']
     except Exception as e:
-        send_message_to_line(e.message)
+        send_message_to_line(e)
         send_message_to_line('Server Maintenance')
         continue
 
