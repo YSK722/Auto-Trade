@@ -45,8 +45,8 @@ class GMOcoin(object):
 
         return r.json()
 
-    def ticker(self):
-        endpoint = '/v1/ticker?symbol=XEM'
+    def ticker(self, symbol='XEM'):
+        endpoint = f'/v1/ticker?symbol={symbol}'
         return self._request(endpoint=endpoint)
 
     @property
@@ -57,12 +57,12 @@ class GMOcoin(object):
     def ask(self):
         return float(self.ticker()['data'][0]['ask'])
 
-    def trades(self, params=None):
-        endpoint = '/v1/trades?symbol=XEM'
+    def trades(self, params=None, symbol='XEM'):
+        endpoint = f'/v1/trades?symbol={symbol}'
         return self._request(endpoint=endpoint, params=params)
 
-    def order_books(self, params=None):
-        endpoint = '/v1/orderbooks?symbol=XEM'
+    def order_books(self, params=None, symbol='XEM'):
+        endpoint = f'/v1/orderbooks?symbol={symbol}'
         return self._request(endpoint=endpoint, params=params)
 
     def assets(self):
@@ -89,8 +89,8 @@ class GMOcoin(object):
         return self._request(endpoint=endpoint, pp=pp, params=params,
                              method='POST')
 
-    def transaction(self):
-        endpoint = '/v1/trades?symbol=XEM'
+    def transaction(self, symbol='XEM'):
+        endpoint = f'/v1/trades?symbol={symbol}'
         return self._request(endpoint=endpoint)
 
     @property
