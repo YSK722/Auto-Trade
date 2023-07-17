@@ -65,16 +65,16 @@ while True:
         send_message_to_line(e)
         send_message_to_line('Server Maintenance')
         continue
+
     for i in range(len(symbols)):
         symbol = symbols[i]
         try:
             df = Tickers[i].history(period='3d', interval='15m')
+            df['+2σ'], df['MA1'], df['-2σ'] = BBANDS(df['Close'], timeperiod=stack1, matype=MA_Type.EMA)
+            df['MA2'] = MA(df['Close'], timeperiod=stack2)
         except Exception as e:
             send_message_to_line(e)
             continue
-        
-        df['+2σ'], df['MA1'], df['-2σ'] = BBANDS(df['Close'], timeperiod=stack1, matype=MA_Type.EMA)
-        df['MA2'] = MA(df['Close'], timeperiod=stack2)
 
         price = df['Close'].iloc[-1]
         MA1 = df['MA1'].iloc[-1]
