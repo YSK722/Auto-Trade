@@ -3,6 +3,8 @@ import hashlib
 import json
 import time
 from datetime import datetime
+from socket import gaierror
+from urllib3.exceptions import NewConnectionError, MaxRetryError
 
 import requests
 
@@ -39,7 +41,7 @@ class GMOcoin(object):
                 else:
                     r = requests.post(url, headers=headers, data=body)
                 break
-            except requests.exceptions.RequestException as e:
+            except (requests.exceptions.RequestException, requests.exceptions.ConnectionError, gaierror, NewConnectionError, MaxRetryError) as e:
                 send_message_to_line(repr(e.args))
                 time.sleep(1)
 
@@ -69,6 +71,11 @@ class GMOcoin(object):
         pp = '/private'
         endpoint = '/v1/account/assets'
         return self._request(endpoint=endpoint, pp=pp)
+
+    def activeOrders(self, params):
+        pp = '/private'
+        endpoint = '/v1/activeOrders'
+        return self._request(endpoint=endpoint, pp=pp, params=params)
 
     @property
     def position(self):
