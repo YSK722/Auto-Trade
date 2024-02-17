@@ -51,13 +51,14 @@ class GMOcoin(object):
         endpoint = f'/v1/ticker?symbol={symbol}'
         return self._request(endpoint=endpoint)
 
-    @property
-    def last(self):
-        return float(self.ticker()['data'][0]['last'])
+    def last(self, symbol='XEM'):
+        return float(self.ticker(symbol)['data'][0]['last'])
 
-    @property
-    def ask(self):
-        return float(self.ticker()['data'][0]['ask'])
+    def ask(self, symbol='XEM'):
+        return float(self.ticker(symbol)['data'][0]['ask'])
+
+    def bid(self, symbol='XEM'):
+        return float(self.ticker(symbol)['data'][0]['bid'])
 
     def trades(self, params=None, symbol='XEM'):
         endpoint = f'/v1/trades?symbol={symbol}'
