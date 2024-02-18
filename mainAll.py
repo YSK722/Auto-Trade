@@ -67,12 +67,13 @@ interval = 5  # minites
 #interval = 1  # minites
 #stack1, stack2 = 240, 720
 chartStack = 12 * 24
-upper, lower = 4, 2
 
 #isOrder = False
 symbols = ['SOL', 'DOGE', 'LINK', 'ADA', 'MONA', 'DAI', 'MKR', 'ATOM', 'DOT', 'ENJ', 'QTUM', 'XTZ', 'BAT', 'XLM', 'XEM', 'XRP', 'LTC', 'BCH', 'ETH', 'BTC']
-stack1 = [12, 8, 12, 28, 36, 16, 40, 52, 20, 72, 40, 40, 60, 48, 48, 16, 24, 16, 12, 20]
-stack2 = [4, 12, 4, 48, 56, 68, 64, 76, 40, 32, 72, 68, 12, 44, 52, 8, 20, 28, 16, 24]
+stack1 = [12, 8, 8, 28, 40, 12, 36, 48, 20, 76, 36, 40, 52, 48, 44, 12, 16, 12, 12, 20]
+stack2 = [4, 12, 4, 48, 64, 72, 60, 68, 40, 44, 76, 68, 20, 40, 60, 12, 4, 24, 16, 28]
+upper = [3.2, 2.6, 2.4, 4, 2.4, 3.4, 4.6, 4.6, 3.4, 3.8, 4, 3.8, 4.8, 4, 4.4, 3.2, 4, 3.4, 3, 3]
+lower = [1.4, 1.6, 1.2, 1.4, 2.4, 3, 2, 2, 1.8, 2, 1.8, 2, 1.2, 1.8, 1.8, 1.6, 1.8, 1.8, 1.4, 1.6]
 count, countAsk, countBid, priceAtAsk = 0, 0, 0, [0]*len(symbols)
 positions = gmocoin.position
 Tickers = []
@@ -108,8 +109,8 @@ while True:
 
         df['up'], df['MA1'], df['low'] = BBANDS(df['Close'],
                                                 timeperiod=stack1[i],
-                                                nbdevup=upper,
-                                                nbdevdn=lower)
+                                                nbdevup=upper[i],
+                                                nbdevdn=lower[i])
         df['MA2'] = MA(df['Close'], timeperiod=stack2[i])
         df['EMA2'] = MA(df['Close'], timeperiod=stack2[i], matype=MA_Type.EMA)
         df['RSI'] = RSI(df['Close'])
